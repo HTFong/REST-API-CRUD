@@ -1,8 +1,10 @@
 package com.example.blog.controller;
 
 import com.example.blog.dtos.PostDto;
+import com.example.blog.dtos.PostResp;
 import com.example.blog.exception.ResourceNotFoundException;
 import com.example.blog.service.PostService;
+import com.example.blog.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,29 +17,40 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostService postService;
+
     @PostMapping
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto post) {
         PostDto rs = postService.createPost(post);
         return new ResponseEntity<>(rs, HttpStatus.CREATED);
     }
+
     @GetMapping
-    private ResponseEntity<List<PostDto>> getAllPost() {
-        List<PostDto> dtoList = postService.getAllPost();
-        return new ResponseEntity<>(dtoList,HttpStatus.OK);
+    private ResponseEntity<PostResp> getAllPost(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "orderBy", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String orderBy
+
+    ) {
+        PostResp postResponse = postService.getAllPost(pageNo, pageSize, sortBy, orderBy);
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPost(@PathVariable long id) {
         PostDto postDto = postService.getPostById(id);
         return ResponseEntity.ok(postDto);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable long id) {
         PostDto rs = postService.updatePost(id, postDto);
         return ResponseEntity.ok(rs);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable long id) {
         postService.deletePostById(id);
-        return ResponseEntity.ok("Delete success");
+        return ResponseEntity.ok("Delete success aa");
     }
 }
