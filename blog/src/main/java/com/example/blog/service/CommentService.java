@@ -10,6 +10,12 @@ public interface CommentService {
 
     List<CommentDto> getCommentsByPostId(long postId);
 
+    CommentDto getCommentById(long postId, long id);
+
+    CommentDto updateCommment(long postId, long id, CommentDto commentDto);
+
+    void deleteComment(long postId, long id);
+
     CommentDto mapToDto(Comment entity);
 
     Comment mapToEntity(CommentDto dto);

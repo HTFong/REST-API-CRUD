@@ -6,6 +6,7 @@ import com.example.blog.entity.Post;
 import com.example.blog.exception.ResourceNotFoundException;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepo;
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     public PostDto createPost(PostDto postDto) {
         Post entity = mapToEntity(postDto);
@@ -70,22 +73,25 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto mapToDto(Post entity) {
-        PostDto dto = PostDto.builder()
-                .id(entity.getId())
-                .title(entity.getTitle())
-                .description(entity.getDescription())
-                .content(entity.getContent())
-                .build();
+        PostDto dto = modelMapper.map(entity,PostDto.class);
+//        PostDto dto = PostDto.builder()
+//                .id(entity.getId())
+//                .title(entity.getTitle())
+//                .description(entity.getDescription())
+//                .content(entity.getContent())
+//                .build();
         return dto;
     }
     @Override
     public Post mapToEntity(PostDto dto) {
-        Post entity = Post.builder()
-                .id(dto.getId())
-                .title(dto.getTitle())
-                .description(dto.getDescription())
-                .content(dto.getContent())
-                .build();
+        Post entity = modelMapper.map(dto,Post.class);
+
+//        Post entity = Post.builder()
+//                .id(dto.getId())
+//                .title(dto.getTitle())
+//                .description(dto.getDescription())
+//                .content(dto.getContent())
+//                .build();
         return entity;
     }
 

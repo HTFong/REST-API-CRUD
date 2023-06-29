@@ -1,12 +1,11 @@
 package com.example.blog.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+// if use @ToString, it cause recursive. Ex: Comment.getPost.toString, Post.getComment.toString over and over >>Out of Stack
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
