@@ -19,7 +19,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto post) {
         PostDto rs = postService.createPost(post);
