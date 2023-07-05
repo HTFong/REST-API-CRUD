@@ -10,3 +10,8 @@ spring:
       ddl-auto: update
       generate-ddl: true
       show-sql: true
+#  security:
+#    user:
+#      name: user
+#      password: user
+#      roles: ADMIN

@@ -5,12 +5,13 @@ import com.example.blog.dtos.PostResp;
 import com.example.blog.exception.ResourceNotFoundException;
 import com.example.blog.service.PostService;
 import com.example.blog.utils.AppConstants;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -18,8 +19,9 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto post) {
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto post) {
         PostDto rs = postService.createPost(post);
         return new ResponseEntity<>(rs, HttpStatus.CREATED);
     }
