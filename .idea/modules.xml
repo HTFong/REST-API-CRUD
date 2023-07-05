@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/blog/blog.iml" filepath="$PROJECT_DIR$/blog/blog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo-security/demo-security.iml" filepath="$PROJECT_DIR$/demo-security/demo-security.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/phong-workspace.iml" filepath="$PROJECT_DIR$/.idea/phong-workspace.iml" />
     </modules>
   </component>
