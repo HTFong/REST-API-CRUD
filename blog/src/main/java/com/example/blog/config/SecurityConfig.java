@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +27,13 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -35,12 +44,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
         return httpSecurity.build();
     }
-
+/*
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder().username("user").password(passwordEncoder().encode("user")).roles("USER").build();
@@ -51,4 +61,5 @@ public class SecurityConfig {
         //return new InMemoryUserDetailsManager(user,user1,admin,admin1,root);
         return new InMemoryUserDetailsManager(new ArrayList<UserDetails>(List.of(user, user1, admin, admin1,root)));
     }
+    */
 }

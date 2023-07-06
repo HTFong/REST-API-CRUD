@@ -19,15 +19,8 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
-    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto post) {
-        PostDto rs = postService.createPost(post);
-        return new ResponseEntity<>(rs, HttpStatus.CREATED);
-    }
-
     @GetMapping
-    private ResponseEntity<PostResp> getAllPost(
+    public ResponseEntity<PostResp> getAllPost(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
@@ -36,6 +29,13 @@ public class PostController {
     ) {
         PostResp postResponse = postService.getAllPost(pageNo, pageSize, sortBy, orderBy);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto post) {
+        PostDto rs = postService.createPost(post);
+        return new ResponseEntity<>(rs, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
