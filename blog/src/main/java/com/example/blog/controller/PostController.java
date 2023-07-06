@@ -44,12 +44,14 @@ public class PostController {
         return ResponseEntity.ok(postDto);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable long id) {
         PostDto rs = postService.updatePost(id, postDto);
         return ResponseEntity.ok(rs);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable long id) {
         postService.deletePostById(id);
