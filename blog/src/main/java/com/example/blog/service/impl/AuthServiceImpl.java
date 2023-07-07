@@ -7,6 +7,7 @@ import com.example.blog.entity.User;
 import com.example.blog.exception.BlogAPIException;
 import com.example.blog.repository.RoleRepository;
 import com.example.blog.repository.UserRepository;
+import com.example.blog.security.JwtTokenProvider;
 import com.example.blog.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,12 +31,15 @@ public class AuthServiceImpl implements AuthService {
     private RoleRepository roleRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public String login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "User Loggedin success";
+        String token = jwtTokenProvider.generateToken(authentication);
+        return token;
     }
 
     @Override
