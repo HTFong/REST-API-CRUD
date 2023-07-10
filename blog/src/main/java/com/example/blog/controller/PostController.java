@@ -2,7 +2,6 @@ package com.example.blog.controller;
 
 import com.example.blog.dtos.PostDto;
 import com.example.blog.dtos.PostResp;
-import com.example.blog.exception.ResourceNotFoundException;
 import com.example.blog.service.PostService;
 import com.example.blog.utils.AppConstants;
 import jakarta.validation.Valid;
@@ -11,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -57,4 +58,10 @@ public class PostController {
         postService.deletePostById(id);
         return ResponseEntity.ok("Delete success aa");
     }
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<List<PostDto>> getPostByCateId(@PathVariable("id") long categoryId) {
+        List<PostDto> posts = postService.getPostsByCategoryId(categoryId);
+        return ResponseEntity.ok(posts);
+    }
+
 }
