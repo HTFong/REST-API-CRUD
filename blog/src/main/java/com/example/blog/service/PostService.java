@@ -17,6 +17,8 @@ public interface PostService {
 
     void deletePostById(long id);
 
+    List<PostDto> getPostsByCategoryId(long categoryId);
+
     PostDto mapToDto(Post entity);
 
     Post mapToEntity(PostDto dto);
