@@ -1,5 +1,6 @@
 package com.example.blog.controller;
 
+import com.example.blog.dtos.JWTResq;
 import com.example.blog.dtos.LoginDto;
 import com.example.blog.dtos.RegisterDto;
 import com.example.blog.service.AuthService;
@@ -13,13 +14,17 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     private AuthService authService;
+
     @PostMapping(value = {"/login", "/signin"})
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-        String resp = authService.login(loginDto);
+    public ResponseEntity<JWTResq> login(@RequestBody LoginDto loginDto) {
+        String token = authService.login(loginDto);
+        JWTResq resp = new JWTResq();
+        resp.setAccessToken(token);
         return ResponseEntity.ok(resp);
     }
+
     @PostMapping(value = {"/register", "/signup"})
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
+    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         String response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
