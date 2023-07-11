@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,10 +57,11 @@ public class AuthServiceImpl implements AuthService {
                 .email(registerDto.getEmail())
                 .password(passwordEncoder.encode(registerDto.getPassword()))
                 .build();
-        Set<Role> roles = new HashSet<>();
         Role userRole = roleRepo.findByName("ROLE_USER").get();
-        roles.add(userRole);
-        user.setRoles(roles);
+//        Set<Role> roles = new HashSet<>();
+//        roles.add(userRole);
+//        user.setRoles(roles);
+        user.setRoles(Collections.singleton(userRole));
 
         userRepo.save(user);
 
