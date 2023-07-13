@@ -1,0 +1,4 @@
+diff a/serach-rest-api/src/main/java/com/example/serachrestapi/controller/ProductController.java b/serach-rest-api/src/main/java/com/example/serachrestapi/controller/ProductController.java	(rejected hunks)
+@@ -0,0 +1,2 @@
++package com.example.serachrestapi.controller;public class ProductController {
++}

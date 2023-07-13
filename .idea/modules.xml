@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/blog/blog.iml" filepath="$PROJECT_DIR$/blog/blog.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/phong-workspace.iml" filepath="$PROJECT_DIR$/.idea/phong-workspace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/serach-rest-api/serach-rest-api.iml" filepath="$PROJECT_DIR$/serach-rest-api/serach-rest-api.iml" />
     </modules>
   </component>
 </project>
