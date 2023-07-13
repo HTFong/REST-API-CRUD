@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/myblog
+    username: root
+    password: root
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
+
+    hibernate:
+      ddl-auto: update
+      generate-ddl: true
+      show-sql: true
+#  security:
+#    user:
+#      name: user
+#      password: user
+#      roles: ADMIN
+
+app-jwt-secret: def53e95f1fc7a2aa7dbc4685f282f1e3e4ea3b364b07622e58edb15d239b252
+app-jwt-expiration-milliseconds: 604800000

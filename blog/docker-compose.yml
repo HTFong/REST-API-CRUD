@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  dockmysql:
+    container_name: dock-mysql
+    image: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQl_ROOT_PASSWORD: root
+      MYSQL_DATABASE: myblog
+    networks:
+      spring-mysql-network:
+
+  dockspring:
+    container_name: dock-spring
+    image: springblog
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dockmysql
+    networks:
+      spring-mysql-network:
+networks:
+  spring-mysql-network:
